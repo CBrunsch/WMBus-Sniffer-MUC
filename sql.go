@@ -15,7 +15,7 @@ var db *sql.DB
 
 // Initializes the DB
 func setupDB() {
-	db, _ = sql.Open("mysql", "root:root@/capturedFrames?parseTime=true&loc=Local")
+	db, _ = sql.Open("mysql", *DBUser+":"+*DBPass+"@/"+*DBName+"?parseTime=true&loc=Local")
 }
 
 // Indicates whether new data is available
