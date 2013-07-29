@@ -65,10 +65,31 @@ func getDIFs(originalString string, extension bool) []DIFs {
 	} else {
 		originalString = originalString[:len(originalString)]
 	}
-	outString := strings.Split(originalString, "0E13")
-	outString = strings.Split(outString[1], "DFD11")
 
 	var values []DIFs
+	// Hack: Check for extension attack
+	if extension {
+		outString := strings.Split(outString[1], "0DFD")
+		i := len(outString)
+			
+		dif := "0D"
+		vif := "FD"
+		ascii, _ := hex.DecodeString(fmt.Sprintf("%s", outString[i][3:len(outString[i])]))
+		asciiOutput := fmt.Sprintf("%s", ascii)
+		value := reverse(asciiOutput)
+		
+		//Decode string
+		hexbyte, _ := hex.DecodeString(fmt.Sprintf("%s", originalString[3:len(originalString)]))
+		original := fmt.Sprintf("% X", hexbyte)
+		singleDIF := DIFs{DIF: dif, VIF: vif, Value: value, Original: original}
+
+		values = append(values, singleDIF)
+		return values
+	}
+
+	outString := strings.Split(originalString, "0E13")
+	outString = strings.Split(outString[1], "0DFD")
+
 	for i := range outString {
 		var dif string
 		var vif string
@@ -82,7 +103,7 @@ func getDIFs(originalString string, extension bool) []DIFs {
 			original = ""
 		case 1:
 			dif = "0D"
-			vif = "7D"
+			vif = "FD"
 			ascii, _ := hex.DecodeString(fmt.Sprintf("%s", outString[i][3:len(outString[i])]))
 			asciiOutput := fmt.Sprintf("%s", ascii)
 			value = reverse(asciiOutput)
