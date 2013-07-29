@@ -2,9 +2,9 @@ package mbus
 
 import (
 	"encoding/json"
+	"fmt"
 	"strings"
 	"time"
-	"fmt"
 )
 
 // TODO: Load into the frame
@@ -41,7 +41,7 @@ func (fr Frame) MarshalJSON() ([]byte, error) {
 
 // Frame creates and initializes a new frame
 func NewFrame(fr string) (*Frame, error) {
-	frame := &Frame{Value: fmt.Sprintf("%s", strings.ToUpper(fmt.Sprintf("%s",fr)))}
+	frame := &Frame{Value: fmt.Sprintf("%s", strings.ToUpper(fmt.Sprintf("%s", fr)))}
 
 	return frame, nil
 }

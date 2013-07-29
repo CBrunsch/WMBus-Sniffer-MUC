@@ -26,7 +26,7 @@ func reverse(s string) string {
 // Get the plain text out of a frame
 func (fr *Frame) PlainText() []DIFs {
 	if fr.Key != "" {
-		// Check whether the encrypted value is too long, if this is the case it is 
+		// Check whether the encrypted value is too long, if this is the case it is
 		// a plaintext extension and we have to parse this data
 		if (len(fr.Value[fr.ValueStart()*2:]) / 2) > fr.ConfigurationLength() {
 			return getDIFs(fr.Value[fr.ValueStart()*2+fr.ConfigurationLength()*2:], true)
@@ -63,9 +63,7 @@ func getDIFs(originalString string, extension bool) []DIFs {
 	originalString = strings.TrimLeft(originalString, "2F")
 	if strings.HasSuffix(originalString, "2F") {
 		originalString = originalString[:len(originalString)-4]
-	} else {
-		originalString = originalString[:len(originalString)]
-	}
+	} 
 
 	outString := strings.Split(originalString, "0E13")
 	if len(outString) > 1 {
@@ -101,7 +99,7 @@ func getDIFs(originalString string, extension bool) []DIFs {
 			ascii, _ := hex.DecodeString(fmt.Sprintf("%s", outString[i][:len(outString[i])]))
 			asciiOutput := fmt.Sprintf("%s", ascii)
 			value = reverse(asciiOutput)
-			
+
 			// Decode string
 			hexbyte, _ := hex.DecodeString(fmt.Sprintf("%s", outString[i][:len(outString[i])]))
 			original = "0D FD " + fmt.Sprintf("% X", hexbyte)

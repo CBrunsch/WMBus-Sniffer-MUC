@@ -8,18 +8,18 @@ import (
 	"github.com/ziutek/serial"
 	"log"
 	"net/http"
-	"time"
 	"strconv"
 	"strings"
+	"time"
 )
 
-// Send data to the serial sending device, this function takes care 
+// Send data to the serial sending device, this function takes care
 // of the binary encoding of the passed data.
 // The data should be in format FF FF FF FF
 func sendDataToSniffer(data string) {
 	// Initialize the sender port
 	var err error
-	senderPort,err := serial.Open(*sniffingTTY)
+	senderPort, err := serial.Open(*sniffingTTY)
 	if err != nil {
 		log.Fatal("Error: " + err.Error())
 	}
@@ -44,17 +44,16 @@ func sendDataToSniffer(data string) {
 	time.Sleep(time.Millisecond * 100)
 }
 
-
 // Reads continous the data from the connected serial device
 func readData() {
-	s,err := serial.Open(*sniffingTTY)
+	s, err := serial.Open(*sniffingTTY)
 	if err != nil {
 		log.Fatal("Error: " + err.Error())
 	}
 	snifferActive = true
 
 	var buf []byte
-	
+
 	//	Reset the device
 	sendDataToSniffer("FF 05 00")
 
@@ -71,7 +70,7 @@ func readData() {
 			if bytes.Count(buf, []byte("ff03")) > 0 && snifferActive {
 				frames := strings.Split(fmt.Sprintf("%s", buf), "ff03")
 
-				for i, _ := range frames {
+				for i := range frames {
 					// Only proceed if we received the length byte as we will only read until there
 					if len(frames[i]) > 2 {
 						decodedString, err := hex.DecodeString(fmt.Sprintf("%s", frames[i][:2]))
@@ -79,13 +78,13 @@ func readData() {
 						if err == nil {
 							// The sniffer appends +1 to the length byte, therefore we have to decrement the value
 							lengthByte, err := strconv.Atoi(fmt.Sprintf("%d", decodedString[0]))
-							if err == nil  {
+							if err == nil {
 								lengthByte = lengthByte - 1
 								newLength := fmt.Sprintf("%#x", lengthByte)
 
 								// Only read if the length is correct
-								if len(frames[i]) >= (lengthByte*2)+2 && lengthByte > 10  {
-									frame, _ := mbus.NewFrame(fmt.Sprintf("%s", strings.ToUpper(newLength[2:] + frames[i][2:(lengthByte*2)+2])))
+								if len(frames[i]) >= (lengthByte*2)+2 && lengthByte > 10 {
+									frame, _ := mbus.NewFrame(fmt.Sprintf("%s", strings.ToUpper(newLength[2:]+frames[i][2:(lengthByte*2)+2])))
 									// HACK: Only sniff encrypted frames
 									if frame.Configuration() != "0000" && frame.Configuration() != "" {
 										go addFrameToDB(frame)

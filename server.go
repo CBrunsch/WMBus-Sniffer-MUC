@@ -44,12 +44,12 @@ func main() {
 	snifferService()
 }
 
-// Starts the MUC service on port 8080 
+// Starts the MUC service on port 8080
 func mucService() {
 	http.HandleFunc("/webui", mucLogUIHandler)
 	if err := http.ListenAndServe(":8080", nil); err != nil {
 		log.Fatal("ListenAndServe:", err)
-	} 
+	}
 }
 
 // Starts the sniffer webservice on port 80

@@ -1,17 +1,17 @@
 package main
 
 import (
+	"./mbus"
 	"fmt"
 	"github.com/tarm/goserial"
 	"log"
 	"net/http"
 	"strconv"
 	"strings"
-	"./mbus"
 	"time"
 )
 
-// Send data to the serial sending device, this function takes care 
+// Send data to the serial sending device, this function takes care
 // of the binary encoding of the passed data.
 // The data should be in format FF FF FF FF
 func sendData(data string) {
@@ -21,7 +21,7 @@ func sendData(data string) {
 	if *DemoMode {
 		if strings.HasPrefix(data, "FF 00") {
 			newData := strings.Replace(data, " ", "", -1)
-			frame, _ := mbus.NewFrame(fmt.Sprintf("%s",newData[4:]))
+			frame, _ := mbus.NewFrame(fmt.Sprintf("%s", newData[4:]))
 			go addFrameToDB(frame)
 		}
 	}
@@ -59,15 +59,15 @@ func sendData(data string) {
 func initializeSender() {
 	//	Reset the device
 	sendData("FF 05 00")
-	time.Sleep(time.Second*3)
+	time.Sleep(time.Second * 3)
 
 	// Set device mode to T2
 	sendData("FF 09 03 46 01 07")
-	time.Sleep(time.Second*3)
-	
+	time.Sleep(time.Second * 3)
+
 	// Set device mode to T2
 	sendData("FF 09 03 46 01 07")
-	time.Sleep(time.Second*3)
+	time.Sleep(time.Second * 3)
 }
 
 // Sanitizes a frame

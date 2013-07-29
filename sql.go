@@ -104,8 +104,8 @@ func getNewFrames(lastFrame int) ([]mbus.Frame, int) {
 		rows.Scan(&ID, &value, &timestamp)
 		if ID != 0 {
 			frame, _ := mbus.NewFrame(value)
-			hexbyte, _ :=  hex.DecodeString(fmt.Sprintf("%s",value))
-			frame.Hexified = fmt.Sprintf("% X",fmt.Sprintf("%s", hexbyte))
+			hexbyte, _ := hex.DecodeString(fmt.Sprintf("%s", value))
+			frame.Hexified = fmt.Sprintf("% X", fmt.Sprintf("%s", hexbyte))
 			frame.Time = timestamp
 			frame.ID = ID
 			frames = append(frames, *frame)
@@ -121,7 +121,7 @@ func truncateTable() {
 	db.Query("TRUNCATE TABLE muc")
 }
 
-// Add new frame to SQL 
+// Insert new frame into SQL database
 func addNewFrame(value string, timestamp time.Time) {
 	stmt, err := db.Prepare("INSERT INTO sniffedFrames (value, timestamp) VALUES(?, ?)")
 	if err != nil {

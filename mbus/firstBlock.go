@@ -4,7 +4,7 @@ import (
 	"strconv"
 )
 
-// Parser for the first block 
+// Parser for the first block
 // The length of the frame in byte (exclusive length byte)
 func (fr *Frame) Length() int {
 	return fr.hexToInt(1)
