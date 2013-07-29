@@ -26,7 +26,7 @@ Before compiling you need to ``go get`` the used packages:
 - ``go get github.com/go-sql-driver/mysql``
 
 ### Setup MySQL database
-####TODO
+
 After getting all required third-party packages you have to setup the MySQL database, this can be done using the shell:
 
 - ``cd WMBus-Sniffer-MUC/``
@@ -34,8 +34,10 @@ After getting all required third-party packages you have to setup the MySQL data
 
 ### Compile the application
 
-- ``go build``
+- ``go build -o sniffer``
 - ``chmod a+x ./sniffer``
+
+(or just run execute.sh)
 
 ### Setup the Sniffer and Commander
 
@@ -45,14 +47,15 @@ You have to enable the "CMD Output" (UART Settings) and set the Baud Rate to 960
 
 The application supports multiple parameters:
 
-| Parameter     | Default        | Description                                |
-| ------------- |----------------|--------------------------------------------|
-| snifferTTY    | /dev/ttyUSB0   | Mountpoint of sniffing device (AMB8465-AT) |
-| senderTTY     | /dev/ttyUSB1   | Mountpoint of sending device (AMB-8465-M)  |
-| DBUser        | root           | Username of the DB user                    |
-| DBPass        | root           | Username of the DB user                    |
-| DBName        | capturedFrames | Name of the database                       |
+| Parameter     | Default        | Description                                								|
+| ------------- |----------------|--------------------------------------------------------------------------|
+| snifferTTY    | /dev/ttyUSB0   | Mountpoint of sniffing device (AMB8465-AT) 								|
+| senderTTY     | /dev/ttyUSB1   | Mountpoint of sending device (AMB-8465-M) 								|
+| DBUser        | root           | Username of the DB user                   								|
+| DBPass        | root           | Username of the DB user                    								|
+| DBName        | capturedFrames | Name of the database                       								|
+| DemoMode		| false 		 | Insert sended frames directly into the DB (in case your sender is defect)|
 
 e.g. ``./sniffer -snifferTTY="/dev/ttyUSB0" -senderTTY="/dev/ttyUSB1"``
 
-The sniffer is then listening on "localhost:80" and the MUC on "localhost:8080/webui"
+The sniffer is then listening on "localhost:80" and the MUC on "localhost:8080/webui" - please be advised that this has to be executed as root as the application is using a privileged port.
