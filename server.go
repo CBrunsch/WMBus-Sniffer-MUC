@@ -18,7 +18,7 @@ var sniffingTTY = flag.String("snifferTTY", "/dev/ttyUSB0", "sniffing device")
 var sendingTTY = flag.String("senderTTY", "/dev/ttyUSB1", "sender device")
 var DBUser = flag.String("DBUser", "root", "DB username")
 var DBPass = flag.String("DBPass", "root", "DB password")
-var DBName = flag.String("DBPass", "capturedFrames", "DB name")
+var DBName = flag.String("DBName", "capturedFrames", "DB name")
 
 // Initialize the application
 func main() {
