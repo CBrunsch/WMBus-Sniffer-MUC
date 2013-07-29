@@ -73,6 +73,9 @@ func initializeSender() {
 // Sanitizes a frame
 func sanitizeFrame(frame string) string {
 	if len(frame) > 0 {
+		// Remove double spaces
+		frame = strings.Replace(frame, "  ", " ", -1)
+
 		splittedFrame := strings.Split(frame, "")
 		containsSpace := strings.Contains(frame, " ")
 		if !containsSpace {
