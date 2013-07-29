@@ -58,4 +58,4 @@ The application supports multiple parameters:
 
 e.g. ``./sniffer -snifferTTY="/dev/ttyUSB0" -senderTTY="/dev/ttyUSB1"``
 
-The sniffer is then listening on "[http://localhost:80][]" and the MUC on "[http://localhost:8080/webui][]" - please be advised that this has to be executed as root as the application is using a privileged port.
+The sniffer is then listening on "[http://localhost:80](http://localhost:80)" and the MUC on "[http://localhost:8080/webui](http://localhost:8080/webui)" - please be advised that this has to be executed as root as the application is using a privileged port.
