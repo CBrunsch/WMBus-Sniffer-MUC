@@ -7,6 +7,7 @@ import (
 	"net/http"
 	"strconv"
 	"strings"
+	"./mbus"
 	"time"
 )
 
@@ -14,6 +15,17 @@ import (
 // of the binary encoding of the passed data.
 // The data should be in format FF FF FF FF
 func sendData(data string) {
+
+	// Add it directly to the DB in case the sender is not working correctly
+	// as the firmware is somewhat error prone
+	if *DemoMode {
+		if strings.HasPrefix(data, "FF 00") {
+			newData := strings.Replace(data, " ", "", -1)
+			frame, _ := mbus.NewFrame(fmt.Sprintf("%s",newData[4:]))
+			go addFrameToDB(frame)
+		}
+	}
+
 	// Initialize the sender config
 	senderC := new(serial.Config)
 	senderC.Name = *sendingTTY
@@ -43,27 +55,19 @@ func sendData(data string) {
 	time.Sleep(time.Millisecond * 250)
 }
 
-// Spams the device with a lot of "Frequent Access Mode" 
-func spamFAM(w http.ResponseWriter, r *http.Request) {
-	for {
-		sendData("FF 00 16 53 01 01 78 56 34 12 01 31 72 40 06 49 15 2D 2C 01 02 00 00 00 00")
-		time.Sleep(time.Millisecond * 2)
-	}
-}
-
 // Initializes the sending device (Reset + T2 mode)
 func initializeSender() {
 	//	Reset the device
 	sendData("FF 05 00")
-	time.Sleep(time.Second*1)
+	time.Sleep(time.Second*3)
 
 	// Set device mode to T2
 	sendData("FF 09 03 46 01 07")
-	time.Sleep(time.Second*1)
+	time.Sleep(time.Second*3)
 	
 	// Set device mode to T2
 	sendData("FF 09 03 46 01 07")
-	time.Sleep(time.Second*1)
+	time.Sleep(time.Second*3)
 }
 
 // Sanitizes a frame

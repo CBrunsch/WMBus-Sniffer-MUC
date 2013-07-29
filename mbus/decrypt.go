@@ -55,10 +55,11 @@ func (fr *Frame) PlainText() []DIFs {
 }
 
 func getDIFs(originalString string, extension bool) []DIFs {
-	// Hack: Read the two difs
+	var values []DIFs
+
+	// Format the string properly
 	originalString = strings.ToUpper(originalString)
 	originalString = strings.TrimSpace(originalString)
-
 	originalString = strings.TrimLeft(originalString, "2F")
 	if strings.HasSuffix(originalString, "2F") {
 		originalString = originalString[:len(originalString)-4]
@@ -66,29 +67,10 @@ func getDIFs(originalString string, extension bool) []DIFs {
 		originalString = originalString[:len(originalString)]
 	}
 
-	var values []DIFs
-	// Hack: Check for extension attack
-	if extension {
-		outString := strings.Split(outString[1], "0DFD")
-		i := len(outString)
-			
-		dif := "0D"
-		vif := "FD"
-		ascii, _ := hex.DecodeString(fmt.Sprintf("%s", outString[i][3:len(outString[i])]))
-		asciiOutput := fmt.Sprintf("%s", ascii)
-		value := reverse(asciiOutput)
-		
-		//Decode string
-		hexbyte, _ := hex.DecodeString(fmt.Sprintf("%s", originalString[3:len(originalString)]))
-		original := fmt.Sprintf("% X", hexbyte)
-		singleDIF := DIFs{DIF: dif, VIF: vif, Value: value, Original: original}
-
-		values = append(values, singleDIF)
-		return values
-	}
-
 	outString := strings.Split(originalString, "0E13")
-	outString = strings.Split(outString[1], "0DFD")
+	if len(outString) > 1 {
+		outString = strings.Split(outString[1], "0DFD")
+	}
 
 	for i := range outString {
 		var dif string
@@ -97,19 +79,32 @@ func getDIFs(originalString string, extension bool) []DIFs {
 		var value string
 		switch i {
 		case 0:
-			dif = "0E"
-			vif = "13"
-			value = outString[i][3:4] + outString[i][0:1] + outString[i][1:2]
-			original = ""
+			if len(outString) > 1 {
+				dif = "0E"
+				vif = "13"
+				value = outString[i][3:4] + outString[i][0:1] + outString[i][1:2]
+				original = "0E 13 " + fmt.Sprintf("% X", outString[i])
+			} else {
+				dif = "0D"
+				vif = "FD"
+				ascii, _ := hex.DecodeString(fmt.Sprintf("%s", outString[i][8:len(outString[i])]))
+				asciiOutput := fmt.Sprintf("%s", ascii)
+				value = reverse(asciiOutput)
+
+				// Decode string
+				hexbyte, _ := hex.DecodeString(fmt.Sprintf("%s", outString[i][:len(outString[i])]))
+				original = "0D FD " + fmt.Sprintf("% X", hexbyte)
+			}
 		case 1:
 			dif = "0D"
 			vif = "FD"
-			ascii, _ := hex.DecodeString(fmt.Sprintf("%s", outString[i][3:len(outString[i])]))
+			ascii, _ := hex.DecodeString(fmt.Sprintf("%s", outString[i][:len(outString[i])]))
 			asciiOutput := fmt.Sprintf("%s", ascii)
 			value = reverse(asciiOutput)
+			
 			// Decode string
-			hexbyte, _ := hex.DecodeString(fmt.Sprintf("%s", originalString[3:len(originalString)]))
-			original = fmt.Sprintf("% X", hexbyte)
+			hexbyte, _ := hex.DecodeString(fmt.Sprintf("%s", outString[i][:len(outString[i])]))
+			original = "0D FD " + fmt.Sprintf("% X", hexbyte)
 		}
 
 		singleDIF := DIFs{DIF: dif, VIF: vif, Value: value, Original: original}

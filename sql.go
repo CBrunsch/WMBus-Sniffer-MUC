@@ -18,9 +18,6 @@ func setupDB() {
 	db, _ = sql.Open("mysql", *DBUser+":"+*DBPass+"@/"+*DBName+"?parseTime=true&loc=Local")
 }
 
-// Indicates whether new data is available
-var newData int
-
 // Add a frame to the database
 func addFrameToDB(frame *mbus.Frame) {
 	stmt, err := db.Prepare("INSERT INTO sniffedFrames (value) VALUES(?)")
@@ -28,7 +25,6 @@ func addFrameToDB(frame *mbus.Frame) {
 		log.Fatal(err)
 	}
 	defer stmt.Close()
-	newData++
 	stmt.Exec(frame.Value)
 
 	// Try to update the frame in the muc table

@@ -19,6 +19,7 @@ var sendingTTY = flag.String("senderTTY", "/dev/ttyUSB1", "sender device")
 var DBUser = flag.String("DBUser", "root", "DB username")
 var DBPass = flag.String("DBPass", "root", "DB password")
 var DBName = flag.String("DBName", "capturedFrames", "DB name")
+var DemoMode = flag.Bool("DemoMode", false, "Insert the sent data directly into the DB in case the sender is not working properly")
 
 // Initialize the application
 func main() {
@@ -48,7 +49,7 @@ func mucService() {
 	http.HandleFunc("/webui", mucLogUIHandler)
 	if err := http.ListenAndServe(":8080", nil); err != nil {
 		log.Fatal("ListenAndServe:", err)
-	}
+	} 
 }
 
 // Starts the sniffer webservice on port 80
@@ -56,7 +57,6 @@ func snifferService() {
 	http.HandleFunc("/", mainHandler)
 	http.HandleFunc("/send", sendFrameHandler)
 	http.HandleFunc("/export", exportDump)
-	http.HandleFunc("/spam", spamFAM)
 
 	http.HandleFunc("/import", importDump)
 	http.HandleFunc("/truncate", truncateSQL)
@@ -69,8 +69,6 @@ func snifferService() {
 		log.Fatal("ListenAndServe:", err)
 	}
 }
-
-//var rootTemplate = template.Must(template.ParseFiles("templates/layout.html"))
 
 func mainHandler(w http.ResponseWriter, r *http.Request) {
 	var rootTemplate = template.Must(template.ParseFiles("templates/layout.html"))
@@ -86,14 +84,11 @@ func socketHandler(c *websocket.Conn) {
 	lastID = ID
 
 	for {
-		//if newData > 0 {
 		frames, ID := getNewFrames(lastID)
 		if len(frames) > 0 {
 			json.NewEncoder(c).Encode(frames)
 			lastID = ID
 		}
-		newData = newData - len(frames)
-		//	}
 	}
 }
 
