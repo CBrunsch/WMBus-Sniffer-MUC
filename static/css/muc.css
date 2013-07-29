@@ -1,0 +1,223 @@
+body
+{	
+	background		: white;
+} 
+
+h1
+{
+	color			: #0061A1;
+	font-family		: arial, helvetica, sans-serif;
+	font-size		: 16pt;
+	font-style		: normal;
+}
+
+h2
+{
+	color			: #0061A1;
+	font-family		: arial, helvetica, sans-serif;
+	font-size		: 12pt;
+	font-style		: normal;
+}
+
+h2.title
+{
+    color           : white;
+}
+
+h3
+{
+	color			: #0061A1;
+	font-family		: arial, helvetica, sans-serif;
+	font-size		: 10pt;
+	font-style		: normal;
+}
+
+p
+{
+	color			: black;
+	font-family		: tahoma, arial, helvetica, sans-serif;
+	font-size		: 10pt;
+	font-style		: normal;
+}
+
+p.error
+{
+	color			: red;
+	font-family		: arial, helvetica, sans-serif;
+	font-size		: 10pt;
+	font-style		: normal;
+}
+
+
+p.helptext
+{
+    white-space     : normal;
+}
+
+pre.helptext
+{
+	color			: black;
+	font-family		: arial, helvetica, sans-serif;
+	font-size		: 10pt;
+	font-style		: normal;
+    position        : absolute;
+    bottom          : 50px;
+    width           : 19%;
+}
+
+pre.blb
+{
+	color			: black;
+	font-size		: 8pt;
+}
+
+li
+{
+	color			: black;
+	font-family		: arial, helvetica, sans-serif;
+	font-size		: 10pt;
+	font-style		: normal;
+}
+
+a
+{
+    color			: #0061A1;
+	text-decoration	: none;
+}
+
+a:link
+{
+    color			: #0061A1;
+    text-decoration : none;
+}
+
+a:visited
+{
+    color			: #0061A1;
+    font-family		: arial, helvetica, sans-serif;
+    text-decoration : none;
+}
+
+a:hover
+{
+    color           : red;
+    text-decoration : none;
+}
+
+a:active
+{
+    color           : red;
+    text-decoration : none;
+}
+
+a:focus
+{
+    color           : red;
+    text-decoration : none;
+}
+
+td.deviceinfo
+{
+	background-color: White;
+	font-size		: 8pt;
+	font-family		: Courier;
+}
+
+td.text
+{
+    color			: black;
+	font-family		: arial, helvetica, sans-serif;
+	font-size		: 9pt;
+	font-style		: normal;
+}
+
+td.textbold
+{
+    color           : black;
+    font-family     : arial, helvetica, sans-serif;
+    font-size       : 9pt;
+    font-style      : normal;
+    font-weight     : bold;
+}
+
+td.title
+{
+    background-image: url(/static/img/bg.jpg);
+    background-repeat: repeat-y;
+    color			: white;
+	font-family		: arial, helvetica, sans-serif;
+	font-size		: 12pt;
+	font-style		: normal;
+    font-weight     : bold;
+}
+
+td.menu
+{
+    background-color: #0061A1;
+    color			: white;
+	font-family		: arial, helvetica, sans-serif;
+	font-size		: 10pt;
+	font-style		: normal;
+}
+
+td.menuentry
+{
+    background-color: white;
+    color			: #0061A1;
+	font-family		: arial, helvetica, sans-serif;
+	font-size		: 10pt;
+	font-style		: normal;
+}
+
+td.menutrenner
+{
+    background-color: white;
+}
+
+
+td.error
+{
+	color			: red;
+	font-family		: arial, helvetica, sans-serif;
+	font-size		: 10pt;
+	font-style		: normal;
+}
+
+
+input.normal
+{
+    width           : 200px;
+	font-size		: 9pt;
+}
+
+input.long
+{
+    width           : 600px;
+	font-size		: 9pt;
+}
+
+input.shortlong
+{
+    width           : 400px;
+	font-size		: 9pt;
+}
+
+input.middle
+{
+    width           : 80px;
+	font-size		: 9pt;
+}
+
+input.short
+{
+    width           : 50px;
+	font-size		: 9pt;
+}
+
+legend
+{
+    color			: black;
+	font-family		: arial, helvetica, sans-serif;
+	font-size		: 10pt;
+	font-style		: normal;
+}

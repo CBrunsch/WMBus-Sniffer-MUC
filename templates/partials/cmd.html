@@ -1,0 +1,42 @@
+<div class="container-fluid">
+	<div class="row-fluid">
+		<h4>Single replay</h4>
+		<div class="row-fluid">
+			<form class="form-inline">
+				<input type="text" class="input-xlarge span11" ng-model="payload" placeholder="Payload…" />
+				<button class="btn btn-primary" type="submit" ng-disabled="!payload" ng-click="sendSinglePayload()">Send</button>
+			</form>
+		</div>
+
+		<hr/>
+		
+		<h4>Repeated replay</h4>
+		<div class="row-fluid">
+			<form class="form-inline">
+				<input type="number" class="input-xlarge span1" ng-model="payloadRepeatNo" placeholder="No."/>
+				<input type="text" class="input-xlarge span10" ng-model="payload" placeholder="Payload…"/>
+				<button class="btn btn-primary" type="submit" ng-disabled="!payload || !payloadRepeatNo" ng-click="repeatedPayloadSend()">Send</button>
+			</form>
+		</div>
+
+		<hr/>
+
+		<h4>Plaintext extension</h4>
+		<div class="row-fluid">
+			<input type="text" class="input-xlarge span12" ng-model="payload" placeholder="First payload frame"/>
+			<input type="text" class="input-xlarge span12" ng-model="payload2" placeholder="Data to append"/>
+			<button class="btn btn-primary" type="submit" ng-disabled="!payload || !payload2" ng-click="partiallyEncrypted()">Send</button>
+		</div>
+
+		<hr/>
+
+		<h4>Ping Pong</h4>
+		<div class="row-fluid">
+			<input type="number" class="input-xlarge span1" ng-model="payloadRepeatNo" placeholder="No."/>
+			<input type="text" class="input-xlarge span11" ng-model="payload" placeholder="First payload frame"/>
+			<input type="text" class="input-xlarge span12" ng-model="payload2" placeholder="Second payload frame"/>
+			<button class="btn btn-primary" type="submit" ng-disabled="!payload || !payload2 || !payloadRepeatNo" ng-click="repeatedPayloadSend()">Send</button>
+		</div>
+
+	</div>
+</div>

@@ -1,0 +1,58 @@
+<div class="container-fluid">
+	<div class="row-fluid">
+		<table ng-table="tableParams" show-filter="true" class="table">
+			<tbody ng-repeat="frame in frames | orderBy:'ID':true">
+				<tr>
+					<td title="ID" filter="{ 'ID': 'text' }" sortable="ID"  ng-click="visible(frame.ID)">
+						{{frame.ID}}
+					</td>
+					<td title="Time" filter="{ 'Time': 'text' }" sortable="Time"  ng-click="visible(frame.ID)">
+					{{frame.Time | date:'HH:mm:ss'}}
+					</td>
+					<td title="Length" filter="{ 'Length': 'text' }" sortable="Length" ng-click="visible(frame.ID)">
+						{{frame.Length}}
+					</td>
+					<td title="Control" filter="{ 'Control': 'text' }" sortable="Control" ng-click="visible(frame.ID)">
+						{{frame.Control}}
+					</td>
+					<td title="Man." filter="{ 'Manufacturer': 'text' }" sortable="Manufacturer" ng-click="visible(frame.ID)">
+						{{frame.ManufacturerString}}
+					</td>
+					<td title="Identification" filter="{ 'Identification': 'text' }" sortable="Identification" ng-click="visible(frame.ID)">
+						{{frame.Identification}}
+					</td>
+					<td title="Version" filter="{ 'Version': 'text' }" sortable="Version" ng-click="visible(frame.ID)">
+						{{frame.Version}}
+					</td>
+					<td title="Type" filter="{ 'DeviceType': 'text' }" sortable="DeviceType" ng-click="visible(frame.ID)">
+						{{frame.DeviceType}}
+					</td>
+					<td title="CI" filter="{ 'ControlInformationField': 'text' }" sortable="ControlInformationField" ng-click="visible(frame.ID)">
+						{{frame.ControlInformationField}}
+					</td>
+					<td title="ACC" filter="{ 'AccessNumber': 'text' }" sortable="AccessNumber" ng-click="visible(frame.ID)">
+						{{frame.AccessNumber}}
+					</td>
+					<td title="Status" filter="{ 'StatusField': 'text' }" sortable="StatusField" ng-click="visible(frame.ID)">
+						{{frame.StatusField}}
+					</td>
+					<td title="Conf." filter="{ 'Configuration': 'text' }" sortable="Configuration" ng-click="visible(frame.ID)">
+						{{frame.Configuration}}
+					</td>
+					<td title="IV" filter="{ 'IV': 'text' }" sortable="IV" ng-click="visible(frame.ID)" style="font-family:monospace;">
+						{{frame.IV}}
+					</td>
+					<td title=" ">
+						<div class="btn-group">
+							<button class="btn" ng-click="SendFrame(frame.Hexified)">Replay</button>
+							<button class="btn" ng-click="SendToCMD(frame.Hexified)">CMD</button>
+						</div>
+					</td>
+				</tr>
+				<tr>
+                	<td colspan="13" ng-show="visible[frame.ID] == 1" ng-animate="{show: 'animate-enter'}"><pre>{{frame.Hexified}}</pre></td>
+                </tr>
+			</tbody>
+		</table>
+	</div>
+</div>

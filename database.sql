@@ -1,0 +1,18 @@
+SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
+
+CREATE TABLE IF NOT EXISTS `muc` (
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
+  `address` char(11) NOT NULL DEFAULT '',
+  `value` text NOT NULL,
+  `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `key` char(32) NOT NULL,
+  PRIMARY KEY (`ID`),
+  UNIQUE KEY `address` (`address`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+CREATE TABLE IF NOT EXISTS `sniffedFrames` (
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
+  `value` text NOT NULL,
+  `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;

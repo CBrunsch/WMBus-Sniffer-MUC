@@ -1,0 +1,132 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<title>
+		intraMUC V2 [Status-Meter]
+	</title>
+	<meta name="robots" content="noindex">
+	<link rel="stylesheet" type="text/css" href="/static/css/muc.css" />
+</head>
+<body>
+	<table cellpadding="1" cellspacing="1" border="0" width="900" align="left" style="margin-bottom:20px;">
+		<tr>
+			<td colspan="4" width="809" class="title" align="left" valign="middle">
+				STATUS - METER
+			</td>
+			<td rowspan="1" width="91">
+	          <img with="91" height="48" alt="Dr. Neuhaus Telekommunikation GmbH" src="/static/img/logo.png" />
+			</td>
+		</tr>
+		<tr>
+			<td class="menu">START</td>
+			<td class="menu">STATUS</td>
+			<td class="menu">CONFIGURATION</td>
+			<td class="menu">&nbsp;</td>
+			<td class="menu">&nbsp;</td>
+		</tr>
+		<tr>
+			<td class="menuentry"><a href="/webui">start</a> | <a href="/webui">logout</a></td>
+			<td class="menuentry"><a href="/webui">system</a> | <a href="/webui">meters</a> | <a href="/webui">log</a></td>
+			<td class="menuentry"><a href="/webui">system</a> | <a href="/webui">wan</a> | <a href="/webui">lan</a> | <a href="/webui">update</a> | <a href="/webui">meters</a> | <a href="/webui">interfaces</a></td>
+		</tr>
+	</table>
+	<div style="width:870px">
+	{{range .}}
+		{{$out := .}}
+		<fieldset style="width:870px; margin-top: 10px;">
+	  	<legend>METER ID: {{.Address}} | #{{.ID}}</legend>
+	  	<table>
+	  		<col style="width:30%">
+	  		<col style="width:70%">
+	  		<tr>
+	  			<td>
+				  	<table>
+				  		<tr>
+				  			<td class="textbold">COMMON</td>
+				  		</tr>
+				  		<tr class=>
+				  			<td class="text">medium:</td>
+				  			<td class="text">{{.DeviceTypeString}}</td>
+				  		</tr>
+				  		<tr>
+				  			<td class="text">manufacturer:</td>
+				  			<td class="text">{{.ManufacturerString}}</td>
+				  		</tr>
+				  		<tr>
+				  			<td class="text">key:</td>
+				  			<td class="text">
+								<form name="input" method="GET">
+									<input type="hidden" name="ID" value="{{.ID}}">
+				  					<input type="text" name="key" style="width:100%;" value="{{.Key}}"/>
+				  				</form>
+							</td>
+				  		</tr>
+						<tr>
+				  			<td class="textbold">INTERFACE</td>
+				  		</tr>
+				  		<tr class=>
+				  			<td class="text">name:</td>
+				  			<td class="text">WMBUS</td>
+				  		</tr>
+				  		<tr>
+				  			<td class="text">protocol:</td>
+				  			<td class="text">MBUS</td>
+				  		</tr>
+				  		<tr>
+				  			<td class="text">address:</td>
+				  			<td class="text">{{.Identification}}</td>
+				  		</tr>
+						<tr>
+							<td class="textbold">DATA</td>
+				  		</tr>
+				  		<tr class=>
+				  			<td class="text">last:</td>
+				  			<td class="text">{{.Time}}</td>
+				  		</tr>
+				  	</table>
+				  </td>
+				  <td>
+				  	<table style="border-left-style: solid;border-left-width: 2px;border-left-color: #0061A1;">
+				  		<col style="width:15%">
+				  		<col style="width:85%">
+				  		<tr>
+				  			<td class="textbold">VALUES</td>
+				  		</tr>
+				  		{{if .PlainText}}
+				  		{{else}}
+				  		<tr><td>&nbsp;</td></tr>
+				  		<tr><td>&nbsp;</td></tr>
+				  		<tr><td>&nbsp;</td></tr>
+				  		<tr><td>&nbsp;</td></tr>
+				  		<tr><td>&nbsp;</td></tr>
+				  		<tr><td>&nbsp;</td></tr>
+				  		{{end}}
+				  		{{range .PlainText}}
+				  		<tr>
+				  			<td class="text">0-0:0.0.254</td>
+				  			<td class="text">unknown WMBus mapping</td>
+				  		</tr>
+				  		<tr>
+				  			<td class="text"></td>
+				  			<td class="text">{{$out.Time}} (Unknown)</td>
+				  		</tr>
+				  		<tr>
+				  			<td class="text"></td>
+				  			<td class="text">value={{.Value}} (dif={{.DIF}}, vif={{.VIF}})</td>
+				  		</tr>
+				  		<tr>
+				  			<td class="text"></td>
+				  			<td class="text">{{.Original}}</td>
+				  		</tr>
+				  		{{end}}
+				  		<tr><td>&nbsp;</td></tr>
+				  		<tr><td>&nbsp;</td></tr>
+				  		<tr><td>&nbsp;</td></tr>
+				  	</table>
+				  </td>
+			  </tr>
+	  	</table>
+	 </fieldset>
+	{{end}}
+	</div>
+</body>
+</html>
