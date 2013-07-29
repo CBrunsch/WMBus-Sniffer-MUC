@@ -29,7 +29,7 @@ func (fr *Frame) PlainText() []DIFs {
 		// Check whether the encrypted value is too long, if this is the case it is
 		// a plaintext extension and we have to parse this data
 		if (len(fr.Value[fr.ValueStart()*2:]) / 2) > fr.ConfigurationLength() {
-			return getDIFs(fr.Value[fr.ValueStart()*2+fr.ConfigurationLength()*2:], true)
+			return getDIFs(fr.Value[fr.ValueStart()*2+fr.ConfigurationLength()*2:])
 		}
 
 		//if(fr.ValueStart()+fr.ConfigurationLength())*2
@@ -44,7 +44,7 @@ func (fr *Frame) PlainText() []DIFs {
 						mode := cipher.NewCBCDecrypter(block, iv)
 						mode.CryptBlocks(ciphertext, ciphertext)
 						plaintext := fmt.Sprintf("%s\n", hex.EncodeToString(ciphertext))
-						values := getDIFs(plaintext, false)
+						values := getDIFs(plaintext)
 						return values
 					}
 				}
@@ -54,7 +54,7 @@ func (fr *Frame) PlainText() []DIFs {
 	return nil
 }
 
-func getDIFs(originalString string, extension bool) []DIFs {
+func getDIFs(originalString string) []DIFs {
 	var values []DIFs
 
 	// Format the string properly
