@@ -1,5 +1,9 @@
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 
+CREATE DATABASE IF NOT EXISTS capturedFrames;
+
+USE capturedFrames;
+
 CREATE TABLE IF NOT EXISTS `muc` (
   `ID` int(11) NOT NULL AUTO_INCREMENT,
   `address` char(11) NOT NULL DEFAULT '',
